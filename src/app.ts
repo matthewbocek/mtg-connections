@@ -8,6 +8,12 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
+// Set X-Content-Type-Options header to disable strict MIME type checking
+app.use((req, res, next) => {
+  res.header('X-Content-Type-Options', 'nosniff');
+  next();
+});
+
 // Azure Cosmos DB setup
 const cosmosEndpoint = config.endpoint
 const cosmosKey = config.key;
