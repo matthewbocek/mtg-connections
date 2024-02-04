@@ -3,7 +3,10 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-.cards button {
-  background-color: transparent;
-  border: none;
+.cards input {
+  display: none;
+}
+
+.cards input:checked+label img {
+  border: 2px solid red;
 }
