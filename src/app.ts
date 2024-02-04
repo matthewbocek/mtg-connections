@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import { CosmosClient } from '@azure/cosmos';
 import * as config from './secrets.json';
@@ -7,12 +8,7 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-
-// Set X-Content-Type-Options header to disable strict MIME type checking
-app.use((req, res, next) => {
-  res.header('X-Content-Type-Options', 'nosniff');
-  next();
-});
+app.use(express.static(path.join(__dirname)));
 
 // Azure Cosmos DB setup
 const cosmosEndpoint = config.endpoint
