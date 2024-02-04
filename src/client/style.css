@@ -12,7 +12,8 @@
 }
 
 .cards label {
-  transition: order 2s
+  display: flex;
+  justify-content: center;
 }
 
 .cards label.solved-4 {

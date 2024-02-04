@@ -1,5 +1,10 @@
 import "./style.css";
+import { wrapGrid } from "animate-css-grid";
+
 const imageContext = require.context("./assets", false, /\.(jpg|jpeg|png)$/);
+const { forceGridAnimation } = wrapGrid(document.querySelector(".cards"), {
+  duration: 1500,
+});
 
 function getChecked() {
   const checkedCardsQuery = ".cards input:checked";
@@ -19,9 +24,11 @@ function submit() {
     return;
   }
 
-  const guess = Array.from(checked).map((el) => el.getAttribute("id")).sort();
+  const guess = Array.from(checked)
+    .map((el) => el.getAttribute("id"))
+    .sort();
 
-  const solution = solutions.find((s) => 
+  const solution = solutions.find((s) =>
     s.items.every((val, idx) => val === guess[idx])
   );
 
@@ -34,10 +41,11 @@ function submit() {
         ).className = `solved-${solution.hard}`)
     );
 
+    forceGridAnimation();
     return;
   }
 
-  checked.forEach((box => box.checked = false));
+  checked.forEach((box) => (box.checked = false));
 }
 
 function component() {
