@@ -1,14 +1,43 @@
 import "./style.css";
-// import './assets/icon.jpg'
 const imageContext = require.context("./assets", false, /\.(jpg|jpeg|png)$/);
 
-const buttonComponent = '<button><img src="CARD_ID.jpg"></button>';
+function getChecked() {
+  const checkedCardsQuery = ".cards input:checked";
+  return document.querySelectorAll(checkedCardsQuery);
+}
 
 function updateSelected(e) {
   // limit to 4 selected
-  if (e.target.checked && document.querySelectorAll(".cards input:checked").length > 4) {
+  if (e.target.checked && getChecked().length > 4) {
     e.preventDefault();
   }
+}
+
+function submit() {
+  const checked = getChecked();
+  if (checked.length !== 4) {
+    return;
+  }
+
+  const guess = Array.from(checked).map((el) => el.getAttribute("id")).sort();
+
+  const solution = solutions.find((s) => 
+    s.items.every((val, idx) => val === guess[idx])
+  );
+
+  if (solution) {
+    checked.forEach((box) => box.remove());
+    guess.forEach(
+      (id) =>
+        (document.querySelector(
+          `label[for="${id}"]`
+        ).className = `solved-${solution.hard}`)
+    );
+
+    return;
+  }
+
+  checked.forEach((box => box.checked = false));
 }
 
 function component() {
@@ -20,14 +49,16 @@ function component() {
     box.setAttribute("id", c);
     box.addEventListener("click", updateSelected);
     cardGrid.appendChild(box);
-    
+
     const label = document.createElement("label");
-    label.setAttribute("for",c);
+    label.setAttribute("for", c);
     const image = document.createElement("img");
     image.src = imageContext(`./${c}.jpg`);
     label.appendChild(image);
     cardGrid.appendChild(label);
   });
+
+  document.querySelector("#submitBtn").addEventListener("click", submit);
 }
 
 const cards = [
@@ -51,7 +82,7 @@ const cards = [
 
 const solutions = [
   {
-    hard: -3,
+    hard: 2,
     name: "Blue",
     items: [
       "69db0298-f6d5-450f-add3-a28c0a43f33f",
@@ -61,7 +92,7 @@ const solutions = [
     ].sort(),
   },
   {
-    hard: -2,
+    hard: 3,
     name: "Black",
     items: [
       "6eb97a96-2c56-4638-b971-00cdf1eafd43",
@@ -71,7 +102,7 @@ const solutions = [
     ].sort(),
   },
   {
-    hard: -4,
+    hard: 1,
     name: "White",
     items: [
       "bb6e37a1-0dfd-4b8a-83d1-8f6d99123516",
@@ -81,14 +112,14 @@ const solutions = [
     ].sort(),
   },
   {
-    hard: -1,
-    name: "green",
+    hard: 4,
+    name: "Green",
     items: [
       "8e48a2f3-9c30-4187-868e-33dbf5e279fc",
       "f6879321-9a61-4c4f-9513-81ad5684c99e",
-      "fc9a7c57-bc83-4965-b670-144a0019b466",
+      "3875f73d-6108-488b-bd34-4cf2c23ce6b3",
       "57d230fc-d382-40b4-bdbd-5fe880fa16bf",
-    ],
+    ].sort(),
   },
 ];
 

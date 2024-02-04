@@ -7,6 +7,27 @@
   display: none;
 }
 
-.cards input:checked+label img {
+.cards input:checked + label img {
   border: 2px solid red;
+}
+
+.cards label {
+  transition: order 2s
+}
+
+.cards label.solved-4 {
+  border: 2px solid orangered;
+  order: -1;
+}
+.cards label.solved-3 {
+  border: 2px solid gold;
+  order: -2;
+}
+.cards label.solved-2 {
+  border: 2px solid silver;
+  order: -3;
+}
+.cards label.solved-1 {
+  border: 2px solid black;
+  order: -4;
 }
