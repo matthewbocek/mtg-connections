@@ -3,7 +3,7 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-.cards .button {
-  background-color: none;
+.cards button {
+  background-color: transparent;
   border: none;
 }
